@@ -16,13 +16,13 @@ const EvolutionChainCard: React.FC<IEvolutionChainCardProps> = ({ data }) => {
                         <div className="flex-row" key={obj}>
                             <div>
                                 <div className="pt-2">
-                                    <PokemonCard className="disabled-click" key={data.id} data={data} onClick={() => {}} />
+                                    <PokemonCard className="disabled-click" key={data.id} data={data} onClick={() => undefined} />
                                 </div>
                             </div>
                             {arrayele.length !== index + 1 && (
                                 <div>
                                     <div className="evol-next-arrow">
-                                        <img src={rightArrowIcon} alt="right arrow icon" onKeyDown={() => { }} role="presentation"></img>
+                                        <img src={rightArrowIcon} alt="right arrow icon" onKeyDown={() => undefined} role="presentation"></img>
                                     </div>
                                 </div>)}
                         </div>))}

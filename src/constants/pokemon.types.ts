@@ -103,6 +103,7 @@ export const getBackground = (pokemonTypes: { type: { name: string } }[]) => {
 
 export const getPokemonDescription = (data: { language: { name: string }, flavor_text: string }[] = []) => {
     if (data.length) {
+        // eslint-disable-next-line prefer-const
         let uniqueTextArray: string[] = [];
         return data.reduce((acc, next) => {
             if (next.language.name === "en" && !uniqueTextArray.includes(next.flavor_text)) {

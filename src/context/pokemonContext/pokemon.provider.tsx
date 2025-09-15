@@ -72,7 +72,6 @@ export const PokemonProvider: React.FC<IProviderProps> = ({ children }) => {
     useEffect(() => {
         getPokemonData().then(() => state.isLoading && setAppLoading(false));
         getAllPokemonDataList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

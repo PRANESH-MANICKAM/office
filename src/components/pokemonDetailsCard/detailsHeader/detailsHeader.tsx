@@ -25,7 +25,7 @@ const DetailsHeader: React.FC<IDetailsHeaderProps> = ({ data, speciesData, backC
             <div className="details-header-container">
                 <div className="header-wrap">
                     <div>
-                        <PokemonCard className="disabled-click" key={data.id} data={data} onClick={() => {}} />
+                        <PokemonCard className="disabled-click" key={data.id} data={data} onClick={() => undefined} />
                     </div>
                     <div className="header-sub-wrap pl-3">
                         <div className="title-wrap">
@@ -39,9 +39,9 @@ const DetailsHeader: React.FC<IDetailsHeaderProps> = ({ data, speciesData, backC
                             <div className="horizontal-line"></div>
                             <div>
                                 <div className="icon-wrap">
-                                    <img src={backIcon} alt="back icon to go backword" onClick={backClick} onKeyDown={() => { }} role="presentation"></img>
-                                    <img src={closeIcon} alt="close icon to go backword" onClick={closeClick} onKeyDown={() => { }} role="presentation"></img>
-                                    <img src={rightIcon} alt="forword icon to go backword" onClick={forwordClick} onKeyDown={() => { }} role="presentation"></img>
+                                    <img src={backIcon} alt="back icon to go backword" onClick={backClick} onKeyDown={() => undefined} role="presentation"></img>
+                                    <img src={closeIcon} alt="close icon to go backword" onClick={closeClick} onKeyDown={() => undefined} role="presentation"></img>
+                                    <img src={rightIcon} alt="forword icon to go backword" onClick={forwordClick} onKeyDown={() => undefined} role="presentation"></img>
                                 </div>
                             </div>
                         </div>

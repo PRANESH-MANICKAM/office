@@ -10,6 +10,7 @@ const StatCard: React.FC<IStatCardProps> = ({ stats }) => {
     if (name === "hp") {
       return "HP"
     } else {
+      // eslint-disable-next-line prefer-const
       let [firstName, lastName] = name.split("-");
       if (firstName === "special" && lastName) return firstName = "Sp. " + getCamleCaseString(lastName);
       else return getCamleCaseString(firstName)
