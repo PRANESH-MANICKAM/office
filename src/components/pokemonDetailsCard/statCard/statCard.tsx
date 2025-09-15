@@ -25,7 +25,7 @@ const StatCard: React.FC<IStatCardProps> = ({ stats }) => {
           <div>
             <Grid fluid>
               <Row className="show-grid">
-                {stats && stats.map(item => (<Col key={item.stat.name} className="pl-0 pt-1" lg={12} xl={12} xs={24} sm={24}>
+                {stats && stats.map((item: { stat: { name: string; }; base_stat: number; }) => (<Col key={item.stat.name} className="pl-0 pt-1" lg={12} xl={12} xs={24} sm={24}>
                   <div className='stat-flex-row'>
                     <Col xs={4} lg={8} xl={8} className="pl-0 pr-0">
                       <div><span className="prop-header">{getStatHeading(item.stat.name)}</span></div>

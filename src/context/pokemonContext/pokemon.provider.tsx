@@ -2,23 +2,25 @@ import React from 'react';
 import { useReducer, useEffect, useRef } from "react";
 import { initialState, reducer } from "../../store/reducers/reducer";
 import PokemonContext from "./pokmon.context";
-import PropTypes from 'prop-types';
-// import * as ACTIONS from "../../store/actions/pokemonAction";
-import {
-    allPokemonURL,
-    initialURL
-} from "../../services/common.service";
+import { allPokemonURL, initialURL } from "../../services/common.service";
+import { IPokemonList } from '../../interface/pokemon.interface';
 
-export const PokemonProvider = ({ children }) => {
+interface IProviderProps {
+    children: React.ReactNode;
+}
+
+export const PokemonProvider: React.FC<IProviderProps> = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
-    var batchURL = useRef(initialURL);
-    const setAppLoading = (loading) => {
+    const batchURL = useRef(initialURL);
+
+    const setAppLoading = (loading: boolean) => {
         dispatch({
             type: "ACTIONS.SET_API_CALL_INPROGRESS",
             payload: loading,
         });
     };
-    const setLoadMoreDataInprogress = (loading) => {
+
+    const setLoadMoreDataInprogress = (loading: boolean) => {
         dispatch({
             type: "ACTIONS.SET_LOAD_MORE_API_CALL_INPROGRESS",
             payload: loading,
@@ -40,16 +42,16 @@ export const PokemonProvider = ({ children }) => {
         setLoadMoreDataInprogress(false);
     };
 
-    const getPokemonDetailsListByUrl = async (results) => {
+    const getPokemonDetailsListByUrl = async (results: any[]) => {
         const pokemonsDetailsList = await Promise.all(
-            results.map(async (pokemon) => {
+            results.map(async (pokemon: any) => {
                 const response = await fetch(pokemon.url);
-                const res = response.json();
+                const res = await response.json();
                 return res;
             })
         );
-        return pokemonsDetailsList
-    }
+        return pokemonsDetailsList;
+    };
 
     const getAllPokemonDataList = async () => {
         const resp = await fetch(allPokemonURL);
@@ -60,16 +62,17 @@ export const PokemonProvider = ({ children }) => {
         });
     };
 
-    const setPokemonList = (pokemonsList) => {
+    const setPokemonList = (pokemonsList: IPokemonList[]) => {
         dispatch({
             type: "ACTIONS.SET_POKEMON_LIST",
             payload: pokemonsList,
         });
-    }
+    };
 
     useEffect(() => {
         getPokemonData().then(() => state.isLoading && setAppLoading(false));
         getAllPokemonDataList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -85,8 +88,4 @@ export const PokemonProvider = ({ children }) => {
             {children}
         </PokemonContext.Provider>
     );
-}
-
-PokemonProvider.propTypes = {
-    children: PropTypes.any,
 }

@@ -8,25 +8,30 @@ import PokemonContext from "../../context/pokemonContext/pokmon.context";
 import DetailPage from "../details/details.page";
 import { Button, Col, Row } from "rsuite";
 import AppFilter from "../../components/filter/filter";
+import { IPokemonList } from "../../interface/pokemon.interface";
 
-
-const HomePage = () => {
+const HomePage: React.FC = () => {
   const [isCardSelected, setToggleSelect] = useState(false);
-  const [pokemonId, setPokemonId] = useState();
+  const [pokemonId, setPokemonId] = useState<number | undefined>();
   const [isFilterEnable, setIsFilterEnable] = useState(false);
 
+  const pokemonContext = useContext(PokemonContext);
 
-  const { state, getPokemonData } = useContext(PokemonContext);
+  if (!pokemonContext) {
+    return <Apploader />;
+  }
+
+  const { state, getPokemonData } = pokemonContext;
   const { pokemonsList, isLoading, isLoadMoreInprogress } = state;
 
   const pokemonsListView = useMemo(
     () =>
-      pokemonsList?.map((data) => (
+      pokemonsList?.map((data: IPokemonList) => (
         <div key={data.id} className="responsive">
-        <PokemonCard key={data.id} data={data} onClick={() => {
-          setPokemonId(data.id);
-          toggleModal();
-        }} />
+          <PokemonCard key={data.id} data={data} onClick={() => {
+            setPokemonId(data.id);
+            toggleModal();
+          }} />
         </div>
       )),
     [pokemonsList]
@@ -40,18 +45,16 @@ const HomePage = () => {
     setToggleSelect((prevState) => !prevState);
   }
 
-  const isFilterEnableHandler = (isEnable) => {
+  const isFilterEnableHandler = (isEnable: boolean) => {
     setIsFilterEnable(isEnable);
   }
-
-  // if (isLoading) return (<Apploader className="app-loader-wrapper" />);
 
   return (
     <>
       <div className="home-container">
         <div>
-          <Header className="header-container">
-            <Row lg={24} xl={24} className="app-header-wrap show-grid">
+          <Header >
+            <Row className="app-header-wrap show-grid">
               <Col xs={12} sm={12} lg={5} xl={5}>
                 <div className="header-title">
                   <h3>Pokédex</h3>
@@ -69,7 +72,7 @@ const HomePage = () => {
 
           </Header>
           <div>
-            <AppFilter  isFilterEnable={isFilterEnableHandler} />
+            <AppFilter isFilterEnable={isFilterEnableHandler} />
           </div>
         </div>
         {pokemonsList.length > 0 && (<div>
@@ -92,12 +95,11 @@ const HomePage = () => {
           <Apploader className="app-loader-wrapper" />
         )}
         <div>
-          {isCardSelected && (<DetailPage isCardSelected={isCardSelected} toggleModal={toggleModal} pokemonId={pokemonId} offset={pokemonsList.length} />)}
+          {isCardSelected && (<DetailPage isCardSelected={isCardSelected} toggleModal={toggleModal} pokemonId={pokemonId!} offset={pokemonsList.length} />)}
         </div>
       </div>
     </>
   )
 }
-
 
 export default HomePage;

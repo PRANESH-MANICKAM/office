@@ -7,19 +7,28 @@ import PropertyCard from '../../components/pokemonDetailsCard/propertyCard/prope
 import StatCard from '../../components/pokemonDetailsCard/statCard/statCard';
 import EvolutionChainCard from '../../components/pokemonDetailsCard/evolutionChainCard/evolutionChainCard';
 import PropTypes from 'prop-types';
+import {
+    IPokemonData,
+    IPokemonSpecies,
+    IPokemonType
+} from '../../interface/pokemon.interface';
 
+interface IDetailPageProps {
+    isCardSelected: boolean;
+    toggleModal: () => void;
+    pokemonId: number;
+    offset: number;
+}
 
-const DetailPage = ({ isCardSelected, toggleModal, pokemonId, offset }) => {
+const DetailPage: React.FC<IDetailPageProps> = ({ isCardSelected, toggleModal, pokemonId, offset }) => {
 
     const [currentPokemonId, setCurrentPokemonId] = useState(pokemonId);
     const handleClose = () => toggleModal();
-    const [data, setPokemonData] = useState();
+    const [data, setPokemonData] = useState<IPokemonData | null>(null);
     const [isDetailLoading, setLoading] = useState(true);
     const [isModalOpen, setCloseModal] = useState(isCardSelected);
-    const [pokemonSpeciesData, setPokemonSpeciesData] = useState();
-    const [pokemonTypeData, setPokemonTypeData] = useState();
-
-
+    const [pokemonSpeciesData, setPokemonSpeciesData] = useState<IPokemonSpecies | undefined>(undefined);
+    const [pokemonTypeData, setPokemonTypeData] = useState<IPokemonType | undefined>(undefined);
 
     useEffect(() => {
         if (!currentPokemonId) return;
@@ -64,13 +73,13 @@ const DetailPage = ({ isCardSelected, toggleModal, pokemonId, offset }) => {
                         <div className="model-container">
                             <Modal.Header closeButton={false} className="rs-modal-header-2" >
                                 {isDetailLoading && <Placeholder.Paragraph style={{ marginTop: 30 }} rows={5} graph="image" active />}
-                                {!isDetailLoading &&
+                                {!isDetailLoading && pokemonSpeciesData &&
                                     <div>
                                         <DetailsHeader data={data} speciesData={pokemonSpeciesData} forwordClick={handleForwordClick} backClick={handleBackwordClick} closeClick={closePopUp} />
                                     </div>
                                 }
                                 <div className="padding-components">
-                                    {pokemonTypeData && (<PropertyCard speciesData={pokemonSpeciesData} data={data} pokemonTypeData={pokemonTypeData} />)}
+                                    {pokemonTypeData && pokemonSpeciesData && (<PropertyCard speciesData={pokemonSpeciesData} data={data} pokemonTypeData={pokemonTypeData} />)}
                                 </div>
                                 <div className="padding-components">
                                     {data.stats && (<StatCard stats={data.stats} />)}
@@ -97,10 +106,10 @@ const DetailPage = ({ isCardSelected, toggleModal, pokemonId, offset }) => {
     )
 }
 DetailPage.propTypes = {
-    isCardSelected: PropTypes.bool,
-    toggleModal: PropTypes.any,
-    pokemonId: PropTypes.number,
-    offset: PropTypes.number
+    isCardSelected: PropTypes.bool.isRequired,
+    toggleModal: PropTypes.any.isRequired,
+    pokemonId: PropTypes.number.isRequired,
+    offset: PropTypes.number.isRequired
 }
 
 export default DetailPage;

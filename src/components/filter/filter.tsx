@@ -1,15 +1,18 @@
-
 import React, { useContext, useEffect, useState } from 'react';
 import { Col, Row } from 'rsuite';
 import { debounceTime, distinctUntilChanged, map, of, Observable } from 'rxjs';
 import { baseURL, SEARCH_SLICED } from '../../constants/apiUrls';
 import { getCamleCaseString } from '../../constants/pokemon.types';
 import PokemonContext from '../../context/pokemonContext/pokmon.context';
+import { IPokemonContext } from '../../interface/pokemon.interface';
 import { getAllParallelCall, getPokemonGenders, getPokemonTypes, removeDuplicateBy } from '../../services/common.service';
 import "./filter.scss";
 import AppMultiSelectDropDown from './multiSelectdropDown/multiSelectdropDown';
 import SearchFilter from './search/search.filter';
-import { IFilterProps, IPokemonContext } from './types';
+
+interface IFilterProps {
+    isFilterEnable: (isEnable: boolean) => void;
+}
 
 const AppFilter: React.FC<IFilterProps> = ({ ...props }) => {
 

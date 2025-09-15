@@ -1,7 +1,7 @@
-import { IPokemon, IPokemonSpecies } from "../../../interface/pokemon.interface";
+import { IPokemonSpecies } from "../../../interface/pokemon.interface";
 
 export interface IDetailsHeaderProps {
-    data: IPokemon;
+    data: any;
     speciesData: IPokemonSpecies;
     backClick: () => void;
     closeClick: () => void;

@@ -81,29 +81,29 @@ export const POKEMON_TYPE = Object.freeze({
     }
 })
 
-export const getPokcolor = (type) => {
-    return POKEMON_TYPE[type] ? POKEMON_TYPE[type].color : POKEMON_TYPE['unknown'].color;
+export const getPokcolor = (type: string) => {
+    return POKEMON_TYPE[type as keyof typeof POKEMON_TYPE] ? POKEMON_TYPE[type as keyof typeof POKEMON_TYPE].color : POKEMON_TYPE['unknown'].color;
 }
 
-export const getBackground = (pokemonTypes) => {
-    var color = "";
-    if (pokemonTypes.length) {
-        var { type: { name: pokemontype1 } } = pokemonTypes[0];
+export const getBackground = (pokemonTypes: { type: { name: string } }[]) => {
+    if (!pokemonTypes || pokemonTypes.length === 0) {
+        return "";
     }
+
+    const pokemontype1 = pokemonTypes[0].type.name;
+
     if (pokemonTypes.length > 1) {
-        const { type: { name: pokemontype2 } } = pokemonTypes[1];
-        color = `linear-gradient(180deg, ${getPokcolor(pokemontype1)} 0%, ${getPokcolor(pokemontype2)} 100%)`;
+        const pokemontype2 = pokemonTypes[1].type.name;
+        return `linear-gradient(180deg, ${getPokcolor(pokemontype1)} 0%, ${getPokcolor(pokemontype2)} 100%)`;
     } else {
-        const { type: { name: pokemontype1 } } = pokemonTypes[0];
-        color = getPokcolor(pokemontype1)
+        return getPokcolor(pokemontype1);
     }
-    return color;
 }
 
 
-export const getPokemonDescription = (data = []) => {
+export const getPokemonDescription = (data: { language: { name: string }, flavor_text: string }[] = []) => {
     if (data.length) {
-        let uniqueTextArray = [];
+        let uniqueTextArray: string[] = [];
         return data.reduce((acc, next) => {
             if (next.language.name === "en" && !uniqueTextArray.includes(next.flavor_text)) {
                 uniqueTextArray.push(next.flavor_text);
@@ -112,6 +112,7 @@ export const getPokemonDescription = (data = []) => {
             return acc;
         }, "");
     }
+    return "";
 }
 
 export const getCamleCaseString = (str = "") => {

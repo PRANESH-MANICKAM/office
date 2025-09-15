@@ -1,7 +1,6 @@
-// import * as ACTIONS from "../../store/actions/pokemonAction";
+import { IAction, IPokemonState } from "../../interface/pokemon.interface";
 
-
-export const initialState = {
+export const initialState: IPokemonState = {
     pokemonsList: [],
     allPokemonsList: [],
     pokemonSelectedId: null,
@@ -12,9 +11,7 @@ export const initialState = {
     pokemonGenderList: []
 };
 
-
-export const reducer = (state, action) => {
-
+export const reducer = (state: IPokemonState, action: IAction): IPokemonState => {
     switch (action.type) {
         case "ACTIONS.SET_POKEMON_LIST":
             return {
@@ -32,12 +29,10 @@ export const reducer = (state, action) => {
             return {
                 ...state, pokemonsTypes: action.payload
             };
-
         case "ACTIONS.SET_POKEMON_GENDER_LIST":
             return {
                 ...state, pokemonGenderList: action.payload
             };
-
         case "ACTIONS.SET_API_CALL_INPROGRESS":
             return {
                 ...state, isLoading: action.payload
@@ -46,7 +41,6 @@ export const reducer = (state, action) => {
             return {
                 ...state, isLoadMoreInprogress: action.payload
             };
-
         case "ACTIONS.SET_POKEMON_BY_ID":
             return {
                 ...state, pokemonData: action.payload
@@ -59,10 +53,7 @@ export const reducer = (state, action) => {
             return {
                 ...state, pokemonSelectedId: action.payload
             };
-
         default:
-            return state
-
+            return state;
     }
-
 }

@@ -1,7 +1,7 @@
-import { IPokemon, IPokemonSpecies, IPokemonType } from "../../../interface/pokemon.interface";
+import { IPokemonSpecies, IPokemonType } from "../../../interface/pokemon.interface";
 
 export interface IPropertyCardProps {
     speciesData: IPokemonSpecies;
-    data: IPokemon;
+    data: any;
     pokemonTypeData: IPokemonType;
 }
