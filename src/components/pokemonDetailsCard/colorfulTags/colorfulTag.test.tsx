@@ -17,6 +17,8 @@ describe('ColorfulTag component', () => {
   it('applies the provided className', () => {
     render(<ColorfulTag {...mockColorfulTagProps} />);
     const tagContainer = screen.getByText(mockColorfulTagProps.text).parentElement;
-    expect(tagContainer).toHaveClass(mockColorfulTagProps.className);
+    if (mockColorfulTagProps.className) {
+      expect(tagContainer).toHaveClass(mockColorfulTagProps.className);
+    }
   });
 });

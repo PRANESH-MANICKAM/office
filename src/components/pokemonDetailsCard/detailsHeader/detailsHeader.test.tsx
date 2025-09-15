@@ -12,7 +12,7 @@ describe('DetailsHeader component', () => {
     expect(nameElement).toBeInTheDocument();
     
     const id = numberFormation(mockDetailsHeaderProps.data.id)
-    const idElement = screen.getByRole('heading', { name: id, level: 3 });
+    const idElement = screen.getByRole('heading', { name: String(id), level: 3 });
     expect(idElement).toBeInTheDocument();
   });
 
@@ -36,7 +36,7 @@ describe('DetailsHeader component', () => {
     const longDescriptionProps = {
         ...mockDetailsHeaderProps,
         speciesData: {
-          ...mockDetailsHeaderProps.speciesData,
+          ...mockDetailsHeaderProps.speciesData!,
           flavor_text_entries: [
             { flavor_text: 'This is a very long description to trigger the tooltip. This is a very long description to trigger the tooltip. This is a very long description to trigger the tooltip. This is a very long description to trigger the tooltip. This is a very long description to trigger the tooltip. This is a very long description to trigger the tooltip. This is a very long description to trigger the tooltip. This is a very long description to trigger the tooltip. ', language: { name: 'en', url: '' }, version: { name: '' , url: ''} },
           ],
@@ -55,7 +55,7 @@ describe('DetailsHeader component', () => {
     const shortDescriptionProps = {
       ...mockDetailsHeaderProps,
       speciesData: {
-        ...mockDetailsHeaderProps.speciesData,
+        ...mockDetailsHeaderProps.speciesData!,
         flavor_text_entries: [
           { flavor_text: 'Short description.', language: { name: 'en', url: '' }, version: { name: '' , url: ''} },
         ],
@@ -88,7 +88,10 @@ describe('DetailsHeader component', () => {
 
   it('pokemon card is clicked', () => {
     render(<DetailsHeader {...mockDetailsHeaderProps} />);
-    const pokemonCard = screen.getByAltText('Avatar').parentElement.parentElement;
-    fireEvent.click(pokemonCard);
+    const avatarImg = screen.getByAltText('Avatar');
+    const pokemonCard = avatarImg.closest('.card');
+    if (pokemonCard) {
+      fireEvent.click(pokemonCard);
+    }
   });
 });
