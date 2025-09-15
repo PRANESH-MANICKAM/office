@@ -1,8 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import PropertyCard from './propertyCard';
+import { IPokemonData, IPokemonSpecies, IPokemonType } from '../../../interface/pokemon.interface';
 
-const mockPokemon = {
+const mockPokemon: IPokemonData = {
     abilities: [
         { ability: { name: 'static' } },
         { ability: { name: 'lightning-rod' } }
@@ -13,10 +14,20 @@ const mockPokemon = {
         type: {
             name: 'electric'
         }
-    }]
+    }],
+    stats: [],
+    name: 'Pikachu',
+    id: 25,
+    sprites: {
+        other: {
+            dream_world: {
+                front_default: ''
+            }
+        }
+    }
 };
 
-const mockPokemonTypeData = {
+const mockPokemonTypeData: IPokemonType = {
     damage_relations: {
         double_damage_from: [
             { name: 'ground' }
@@ -24,11 +35,14 @@ const mockPokemonTypeData = {
     }
 };
 
-const mockSpeciesData = {
+const mockSpeciesData: IPokemonSpecies = {
     egg_groups: [
-        { name: 'monster' },
-        { name: 'water1' }
-    ]
+        { name: 'monster', url: '' },
+        { name: 'water1', url: '' }
+    ],
+    flavor_text_entries: [],
+    evolution_chain: { url: '' },
+    gender_rate: 0
 };
 
 jest.mock('../../../constants/pokemon.types', () => ({
@@ -70,19 +84,26 @@ describe('PropertyCard', () => {
     });
 
     it('should handle missing data gracefully', () => {
-        const incompletePokemon = {
+        const incompletePokemon: IPokemonData = {
             abilities: [],
             height: 0,
             weight: 0,
-            types: []
+            types: [],
+            stats: [],
+            name: '',
+            id: 0,
+            sprites: { other: { dream_world: { front_default: '' } } }
         };
-        const incompletePokemonTypeData = {
+        const incompletePokemonTypeData: IPokemonType = {
             damage_relations: {
                 double_damage_from: []
             }
         };
-        const incompleteSpeciesData = {
-            egg_groups: []
+        const incompleteSpeciesData: IPokemonSpecies = {
+            egg_groups: [],
+            flavor_text_entries: [],
+            evolution_chain: { url: '' },
+            gender_rate: 0
         };
         render(<PropertyCard data={incompletePokemon} speciesData={incompleteSpeciesData} pokemonTypeData={incompletePokemonTypeData} />);
         expect(screen.getByText('Abilities')).toBeInTheDocument();

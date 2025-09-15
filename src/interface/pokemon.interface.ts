@@ -27,6 +27,7 @@ export interface IPokemonData {
     height: number;
     weight: number;
     types: { type: { name: string } }[];
+    abilities: { ability: { name: string } }[];
     sprites: {
         other: {
             dream_world: {
