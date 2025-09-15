@@ -3,9 +3,9 @@ import "./evolutionChainCard.scss"
 import "../../../styles/common.scss";
 import PokemonCard from "../../pokemonCard/pokemonCard";
 import rightArrowIcon from "../../../assets/icons/right-arrow.png"
-import PropTypes from 'prop-types';
+import { IEvolutionChainCardProps } from './types';
 
-const EvolutionChainCard = ({ data }) => {
+const EvolutionChainCard: React.FC<IEvolutionChainCardProps> = ({ data }) => {
     const arrayele = [1, 2, 3];
 
     return (
@@ -16,13 +16,13 @@ const EvolutionChainCard = ({ data }) => {
                         <div className="flex-row" key={obj}>
                             <div>
                                 <div className="pt-2">
-                                    <PokemonCard className="disabled-click" key={data.id} data={data} />
+                                    <PokemonCard className="disabled-click" key={data.id} data={data} onClick={() => {}} />
                                 </div>
                             </div>
                             {arrayele.length !== index + 1 && (
                                 <div>
                                     <div className="evol-next-arrow">
-                                    <img src={rightArrowIcon} alt="right arrow icon" onKeyDown={() => { }} role="presentation"></img>
+                                        <img src={rightArrowIcon} alt="right arrow icon" onKeyDown={() => { }} role="presentation"></img>
                                     </div>
                                 </div>)}
                         </div>))}
@@ -30,10 +30,6 @@ const EvolutionChainCard = ({ data }) => {
             </div>
         </div>
     )
-}
-
-EvolutionChainCard.propTypes = {
-    data: PropTypes.object,
 }
 
 export default EvolutionChainCard;

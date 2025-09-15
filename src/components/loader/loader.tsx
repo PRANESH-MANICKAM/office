@@ -1,8 +1,11 @@
 import React from 'react';
 import { Loader } from "rsuite";
-import PropTypes from 'prop-types';
 
-const Apploader = ({ className }) => {
+interface IAppLoaderProps {
+    className?: string;
+}
+
+const Apploader: React.FC<IAppLoaderProps> = ({ className }) => {
     return (
         <>
             <div className={className}>
@@ -12,7 +15,4 @@ const Apploader = ({ className }) => {
     )
 }
 
-Apploader.propTypes = {
-    className: PropTypes.string
-}
 export default Apploader;

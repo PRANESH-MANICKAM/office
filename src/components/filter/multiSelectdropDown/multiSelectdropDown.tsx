@@ -1,9 +1,9 @@
 import React from 'react';
 import { CheckPicker } from 'rsuite';
 import "./multiSelectdropDown.scss";
-import PropTypes from 'prop-types';
+import { IAppMultiSelectDropDownProps } from './types';
 
-const AppMultiSelectDropDown = ({ label, onChangeHandler, data, ...props }) => (
+const AppMultiSelectDropDown: React.FC<IAppMultiSelectDropDownProps> = ({ label, onChangeHandler, data, ...props }) => (
   <>
     <div className="multiselect-dropdown-wrapper">
       <div className='dropdown-label'><span>{label}</span></div>
@@ -13,16 +13,5 @@ const AppMultiSelectDropDown = ({ label, onChangeHandler, data, ...props }) => (
     </div>
   </>
 );
-
-AppMultiSelectDropDown.propTypes = {
-  data: PropTypes.any,
-  placeholder: PropTypes.string,
-  onChangeHandler: PropTypes.func,
-  isOpen: PropTypes.bool,
-  onCloseHandler: PropTypes.func,
-  onCleanHandler: PropTypes.func,
-  onOpenHandler: PropTypes.func,
-  label: PropTypes.any
-}
 
 export default AppMultiSelectDropDown;

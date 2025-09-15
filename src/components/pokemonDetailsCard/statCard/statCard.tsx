@@ -2,11 +2,11 @@ import React from 'react';
 import { Grid, Row, Col } from 'rsuite';
 import { getCamleCaseString } from '../../../constants/pokemon.types';
 import "./statCard.scss";
-import PropTypes from 'prop-types';
+import { IStatCardProps } from './types';
 
-const StatCard = ({ stats }) => {
+const StatCard: React.FC<IStatCardProps> = ({ stats }) => {
   // const {data} = data;
-  const getStatHeading = (name) => {
+  const getStatHeading = (name: string) => {
     if (name === "hp") {
       return "HP"
     } else {
@@ -45,10 +45,5 @@ const StatCard = ({ stats }) => {
     </>
   )
 };
-
-StatCard.propTypes = {
-  stats: PropTypes.array,
-}
-
 
 export default StatCard;

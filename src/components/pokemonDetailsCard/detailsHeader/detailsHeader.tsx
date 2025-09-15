@@ -8,9 +8,9 @@ import { numberFormation } from "../../../services/common.service";
 import { getPokemonDescription } from "../../../constants/pokemon.types";
 import "./detailsHeader.scss";
 import "../../../styles/common.scss";
-import PropTypes from 'prop-types';
+import { IDetailsHeaderProps } from './types';
 
-const DetailsHeader = ({ data, speciesData, ...props }) => {
+const DetailsHeader: React.FC<IDetailsHeaderProps> = ({ data, speciesData, backClick, closeClick, forwordClick }) => {
 
     const getPokemonDescriptions = () => {
         if (speciesData && speciesData.flavor_text_entries) {
@@ -25,7 +25,7 @@ const DetailsHeader = ({ data, speciesData, ...props }) => {
             <div className="details-header-container">
                 <div className="header-wrap">
                     <div>
-                        <PokemonCard className="disabled-click" key={data.id} data={data} />
+                        <PokemonCard className="disabled-click" key={data.id} data={data} onClick={() => {}} />
                     </div>
                     <div className="header-sub-wrap pl-3">
                         <div className="title-wrap">
@@ -39,16 +39,16 @@ const DetailsHeader = ({ data, speciesData, ...props }) => {
                             <div className="horizontal-line"></div>
                             <div>
                                 <div className="icon-wrap">
-                                    <img src={backIcon} alt="back icon to go backword" onClick={props.backClick} onKeyDown={() => { }} role="presentation"></img>
-                                    <img src={closeIcon} alt="close icon to go backword" onClick={props.closeClick} onKeyDown={() => { }} role="presentation"></img>
-                                    <img src={rightIcon} alt="forword icon to go backword" onClick={props.forwordClick} onKeyDown={() => { }} role="presentation"></img>
+                                    <img src={backIcon} alt="back icon to go backword" onClick={backClick} onKeyDown={() => { }} role="presentation"></img>
+                                    <img src={closeIcon} alt="close icon to go backword" onClick={closeClick} onKeyDown={() => { }} role="presentation"></img>
+                                    <img src={rightIcon} alt="forword icon to go backword" onClick={forwordClick} onKeyDown={() => { }} role="presentation"></img>
                                 </div>
                             </div>
                         </div>
                         <div className="text-description">
                             <div className="text-dot"><span >{getPokemonDescriptions().substring(0, 363)} </span></div>
                             <div className="text-dot">... </div>
-                            {getPokemonDescriptions().length > 363 && <AppTooltip placement="bottom" className="load-more" tooltipClass="tooltip-popover" name="read more" data={getPokemonDescriptions()} appearance="subtle" />}
+                            {getPokemonDescriptions().length > 363 && <AppTooltip placement="bottom" className="load-more" tooltipClass="tooltip-popover" name="read more" data={getPokemonDescriptions()} />}
                         </div>
                     </div>
                 </div>
@@ -56,12 +56,5 @@ const DetailsHeader = ({ data, speciesData, ...props }) => {
         </>
     );
 };
-DetailsHeader.propTypes = {
-    data: PropTypes.object,
-    speciesData: PropTypes.object,
-    backClick: PropTypes.func,
-    closeClick: PropTypes.func,
-    forwordClick: PropTypes.func
-}
 
 export default DetailsHeader;

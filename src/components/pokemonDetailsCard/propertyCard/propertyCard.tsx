@@ -4,9 +4,9 @@ import { getCamleCaseString } from '../../../constants/pokemon.types';
 import ColorfulTag from '../colorfulTags/colorfulTag';
 import "./propertyCard.scss";
 import "../../../styles/common.scss";
-import PropTypes from 'prop-types';
+import { IPropertyCardProps } from './types';
 
-const PropertyCard = ({ speciesData, data, pokemonTypeData }) => {
+const PropertyCard: React.FC<IPropertyCardProps> = ({ speciesData, data, pokemonTypeData }) => {
   return (
     <div className="property-container">
       <Grid fluid>
@@ -73,12 +73,6 @@ const PropertyCard = ({ speciesData, data, pokemonTypeData }) => {
       </Grid>
     </div>
   );
-}
-
-PropertyCard.propTypes = {
-  speciesData: PropTypes.object,
-  data: PropTypes.object,
-  pokemonTypeData: PropTypes.object,
 }
 
 export default PropertyCard;
