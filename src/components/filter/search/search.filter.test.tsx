@@ -12,26 +12,26 @@ describe('SearchFilter component', () => {
   });
 
   it('renders with a placeholder', () => {
-    render(<SearchFilter placeholder="Search here..." onChangeHandler={onChangeHandler} />);
+    render(<SearchFilter placeholder="Search here..." onChangeHandler={onChangeHandler} label="" />);
     const inputElement = screen.getByPlaceholderText('Search here...');
     expect(inputElement).toBeInTheDocument();
   });
 
   it('calls onChangeHandler when the input value changes', () => {
-    render(<SearchFilter onChangeHandler={onChangeHandler} />);
+    render(<SearchFilter onChangeHandler={onChangeHandler} label="" />);
     const inputElement = screen.getByRole('textbox');
     fireEvent.change(inputElement, { target: { value: 'test' } });
     expect(onChangeHandler).toHaveBeenCalled();
   });
 
   it('applies the provided inputClass', () => {
-    render(<SearchFilter inputClass="my-custom-class" onChangeHandler={onChangeHandler} />);
+    render(<SearchFilter inputClass="my-custom-class" onChangeHandler={onChangeHandler} label="" />);
     const inputElement = screen.getByRole('textbox');
     expect(inputElement).toHaveClass('my-custom-class');
   });
 
   it('renders the search icon', () => {
-    render(<SearchFilter onChangeHandler={onChangeHandler} />);
+    render(<SearchFilter onChangeHandler={onChangeHandler} label=""/>);
     const searchIcon = screen.getByRole('button');
     expect(searchIcon).toBeInTheDocument();
   });

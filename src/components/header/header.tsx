@@ -2,10 +2,10 @@ import React from 'react';
 import "./header.scss";
 
 interface IHeaderProps {
-  children: React.ReactNode;
+  children?: React.ReactNode | undefined;
 }
 
-const Header: React.FC<IHeaderProps> = ({ children }) => {
+const Header: React.FC<IHeaderProps> = ({ children = undefined }) => {
   return (
     <header className="header">
       {children}
