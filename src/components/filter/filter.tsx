@@ -40,37 +40,39 @@ const AppFilter: React.FC<IFilterProps> = ({ ...props }) => {
 
     const onCleanTypeHandler = () => {
         props.isFilterEnable(false);
+        getPokemonData(true);
     }
 
     const onCleanGenderHandler = () => {
         props.isFilterEnable(false);
+        getPokemonData(true);
     }
 
 
     const onSearchChangeHandler = (value: string, event: React.SyntheticEvent<Element, Event>) => {
         event.preventDefault();
         value = value.trim();
-        setAppLoading(true);
         if (value.length) {
+            setAppLoading(true);
             props.isFilterEnable(true);
             data$ = of(allPokemonsList).pipe(debounceTime(4000),
                 distinctUntilChanged(), map((pokmons) => {
                     return pokmons.filter((item) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1)
                 })
             );
+
+            data$.subscribe(pokemanList => {
+                if (pokemanList.length > SEARCH_SLICED) {
+                    pokemanList = pokemanList.slice(0, SEARCH_SLICED)
+                }
+                getPokemonDetailsListByUrl(pokemanList).then(res => { filterPokemonData(res) });
+            });
+            setAppLoading(false);
         } else {
             filterPokemonData([]);
             getPokemonData(true);
             props.isFilterEnable(false);
         }
-
-        data$.subscribe(pokemanList => {
-            if (pokemanList.length > SEARCH_SLICED) {
-                pokemanList = pokemanList.slice(0, SEARCH_SLICED)
-            }
-            getPokemonDetailsListByUrl(pokemanList).then(res => { filterPokemonData(res) });
-        });
-        setAppLoading(false);
     }
 
     const onTypeChangeHandler = (value: any[]) => {
@@ -154,26 +156,19 @@ const AppFilter: React.FC<IFilterProps> = ({ ...props }) => {
 
     }
 
-    const getAllPokemonType = async () => {
-        getPokemonTypes().then((res: any) => {
-            setPokemonTypes(res.results);
-        }).catch((err: any) => {
-            return new Error(err)
-        });
-    }
-
-    const getPokemonGendersList = async () => {
-        getPokemonGenders().then((res: any) => {
-            setPokemonGendersList(res.results);
-        }).catch((err: any) => {
-            return new Error(err)
-        });
-    }
-
     useEffect(() => {
-        getAllPokemonType();
-        getPokemonGendersList();
+        const fetchData = async () => {
+            try {
+                const typesRes = await getPokemonTypes();
+                setPokemonTypes(typesRes.results);
+                const gendersRes = await getPokemonGenders();
+                setPokemonGendersList(gendersRes.results);
+            } catch (err) {
+                console.error(err);
+            }
+        };
 
+        fetchData();
     }, []);
 
     return (
