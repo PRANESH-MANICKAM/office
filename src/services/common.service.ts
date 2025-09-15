@@ -7,7 +7,7 @@ export const allPokemonURL = `${baseURL}/pokemon?limit=1100`;
 
 export const getPokemonData = async () => {
   const response = await fetch(`${initialURL}`);
-  const result = response.json();
+  const result = await response.json();
   return result;
 };
 
@@ -38,14 +38,14 @@ export const getPokemonGenders = async () => {
 
 export const getPokemonDataById = async (id: number) => {
   const response = await fetch(`${baseURL}/pokemon/${id}/`);
-  const result = response.json();
+  const result = await response.json();
   return result;
 };
 
 
 export const getPokemonDataByURL = async (URL: string) => {
   const response = await fetch(URL);
-  const result = response.json();
+  const result = await response.json();
   return result;
 }
 
@@ -59,10 +59,19 @@ export const getAllParallelCall = async (ApiUrls: string[]) => {
   return await Promise.all(
     ApiUrls.map(async url => {
       const res = await fetch(url);
-      return res.json(); // Send request for each id
+      return await res.json(); // Send request for each id
     }));
 }
 
 export const removeDuplicateBy = (arr: any[], prop: string) => {
-  return [...new Map(arr.map((m) => [m[prop], m])).values()];
-}
+  const seen = new Set();
+  return arr.filter(item => {
+    const key = item[prop];
+    if (seen.has(key)) {
+      return false;
+    } else {
+      seen.add(key);
+      return true;
+    }
+  });
+};
