@@ -23,7 +23,7 @@ export const mockSpeciesData = {
 export const mockDetailsHeaderProps: IDetailsHeaderProps = {
     data: mockPokemonData,
     speciesData: mockSpeciesData,
-    backClick: jest.fn(),
-    closeClick: jest.fn(),
-    forwordClick: jest.fn(),
+    backClick: () => undefined,
+    closeClick: () => undefined,
+    forwordClick: () => undefined,
 };

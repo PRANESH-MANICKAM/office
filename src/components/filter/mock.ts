@@ -21,8 +21,8 @@ export const mockPokemonContextValue: IPokemonContext = {
     isLoading: false,
     isLoadMoreInprogress: false,
   },
-  dispatch: jest.fn(),
-  getPokemonData: jest.fn(),
-  getPokemonDetailsListByUrl: jest.fn().mockResolvedValue([]),
-  setAppLoading: jest.fn(),
+  dispatch: () => undefined,
+  getPokemonData: () => undefined,
+  getPokemonDetailsListByUrl: () => Promise.resolve([]),
+  setAppLoading: () => undefined,
 };

@@ -4,6 +4,7 @@ export const mockPokemonData: IPokemonCardProps['data'] = {
   id: 25,
   name: 'Pikachu',
   types: [{ type: { name: 'electric' } }],
+  abilities: [],
   sprites: {
     other: {
       dream_world: {
