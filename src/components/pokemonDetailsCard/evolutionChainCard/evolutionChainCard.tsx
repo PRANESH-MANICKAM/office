@@ -6,20 +6,23 @@ import rightArrowIcon from "../../../assets/icons/right-arrow.png"
 import { IEvolutionChainCardProps } from './types';
 
 const EvolutionChainCard: React.FC<IEvolutionChainCardProps> = ({ data }) => {
-    const arrayele = [1, 2, 3];
+
+    if(!Array.isArray(data)) {
+        return null;
+    }
 
     return (
         <div>
             <div className="evol-container">
                 <div className="evol-wrap evolu-break">
-                    {arrayele.map((obj, index) => (
-                        <div className="flex-row" key={obj}>
+                    {data.map((pokemon: any, index: number) => (
+                        <div className="flex-row" key={pokemon.id}>
                             <div>
                                 <div className="pt-2">
-                                    <PokemonCard className="disabled-click" key={data.id} data={data} onClick={() => undefined} />
+                                    <PokemonCard className="disabled-click" data={pokemon} onClick={() => undefined} />
                                 </div>
                             </div>
-                            {arrayele.length !== index + 1 && (
+                            {data.length !== index + 1 && (
                                 <div>
                                     <div className="evol-next-arrow">
                                         <img src={rightArrowIcon} alt="right arrow icon" onKeyDown={() => undefined} role="presentation"></img>
