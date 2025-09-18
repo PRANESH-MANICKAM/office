@@ -17,19 +17,28 @@ describe('DetailsHeader component', () => {
   });
 
   it('calls click handlers when icons are clicked', () => {
-    render(<DetailsHeader {...mockDetailsHeaderProps} />);
+    const mockBackClick = jest.fn();
+    const mockCloseClick = jest.fn();
+    const mockForwardClick = jest.fn();
+    const testProps = {
+      ...mockDetailsHeaderProps,
+      backClick: mockBackClick,
+      closeClick: mockCloseClick,
+      forwordClick: mockForwardClick,
+    };
+    render(<DetailsHeader {...testProps} />);
     
     const backIcon = screen.getByAltText('back icon to go backword');
     fireEvent.click(backIcon);
-    expect(mockDetailsHeaderProps.backClick).toHaveBeenCalled();
+    expect(mockBackClick).toHaveBeenCalled();
     
     const closeIcon = screen.getByAltText('close icon to go backword');
     fireEvent.click(closeIcon);
-    expect(mockDetailsHeaderProps.closeClick).toHaveBeenCalled();
+    expect(mockCloseClick).toHaveBeenCalled();
     
     const forwardIcon = screen.getByAltText('forword icon to go backword');
     fireEvent.click(forwardIcon);
-    expect(mockDetailsHeaderProps.forwordClick).toHaveBeenCalled();
+    expect(mockForwardClick).toHaveBeenCalled();
   });
 
   it('renders pokemon description and tooltip for long description', () => {
