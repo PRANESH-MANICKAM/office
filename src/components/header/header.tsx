@@ -7,7 +7,7 @@ interface IHeaderProps {
 
 const Header: React.FC<IHeaderProps> = ({ children = undefined }) => {
   return (
-    <header className="header">
+    <header className="app-header">
       {children}
     </header>
   );

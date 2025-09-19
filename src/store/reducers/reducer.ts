@@ -8,7 +8,8 @@ export const initialState: IPokemonState = {
     isLoading: true,
     isLoadMoreInprogress: false,
     pokemonsTypes: [],
-    pokemonGenderList: []
+    pokemonGenderList: [],
+    filterPokemonList: [],
 };
 
 export const reducer = (state: IPokemonState, action: IAction): IPokemonState => {

@@ -8,7 +8,7 @@ interface IAppLoaderProps {
 const Apploader: React.FC<IAppLoaderProps> = ({ className }) => {
     return (
         <>
-            <div className={className}>
+            <div data-testid="app-loader" className={`app-loader ${className ? className : ''}`}>
                 <Loader size="md" content="Loading..." />
             </div>
         </>

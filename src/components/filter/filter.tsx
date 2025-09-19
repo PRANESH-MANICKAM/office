@@ -17,7 +17,7 @@ interface IFilterProps {
 const AppFilter: React.FC<IFilterProps> = ({ ...props }) => {
 
     const { state, getPokemonData, dispatch, setAppLoading, getPokemonDetailsListByUrl } = useContext(PokemonContext) as any as IPokemonContext;
-    const { allPokemonsList, pokemonsTypes, pokemonGenderList } = state;
+    const { allPokemonsList = [], pokemonsTypes, pokemonGenderList } = state;
 
     const [isOpenTypeFilter, setIsOpenTypeFilter] = useState<boolean>(false);
     const [isOpenGendreFilter, setIsOpenGenderFilter] = useState<boolean>(false);

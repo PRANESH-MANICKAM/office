@@ -13,6 +13,7 @@ export interface IPokemonState {
     isLoadMoreInprogress: boolean;
     pokemonsTypes: any[];
     pokemonGenderList: any[];
+    filterPokemonList: any[];
 }
 
 export interface IAction {

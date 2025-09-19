@@ -20,6 +20,7 @@ export const mockPokemonContextValue: IPokemonContext = {
     pokemonData: undefined,
     isLoading: false,
     isLoadMoreInprogress: false,
+    filterPokemonList: [],
   },
   dispatch: () => undefined,
   getPokemonData: () => undefined,

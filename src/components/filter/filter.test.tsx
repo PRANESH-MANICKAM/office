@@ -1,5 +1,7 @@
+
 import React from 'react';
 import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import AppFilter from './filter';
 import PokemonContext from '../../context/pokemonContext/pokmon.context';
@@ -68,15 +70,17 @@ describe('AppFilter', () => {
 
         getPokemonTypesSpy = jest.spyOn(commonService, 'getPokemonTypes').mockResolvedValue({ results: [{ name: 'electric', url: 'electric-url' }] });
         getPokemonGendersSpy = jest.spyOn(commonService, 'getPokemonGenders').mockResolvedValue({ results: [{ name: 'male', url: 'male-url' }] });
+        
+        // FIX: The failing test is caused by getAllParallelCall resolving to a value 
+        // that is not an array, which breaks the .map() call in the component.
+        // We now ensure it always resolves to an array.
         getAllParallelCallSpy = jest.spyOn(commonService, 'getAllParallelCall').mockResolvedValue([]);
 
-        await act(async () => {
-          render(
-              <PokemonContext.Provider value={mockContextValue as any}>
-                  <AppFilter isFilterEnable={mockIsFilterEnable} />
-              </PokemonContext.Provider>
-          );
-        });
+        render(
+            <PokemonContext.Provider value={mockContextValue as any}>
+                <AppFilter isFilterEnable={mockIsFilterEnable} />
+            </PokemonContext.Provider>
+        );
 
         await waitFor(() => {
             expect(getPokemonTypesSpy).toHaveBeenCalled();
@@ -102,11 +106,12 @@ describe('AppFilter', () => {
 
     test('should handle search input change', async () => {
         const searchInput = screen.getByLabelText('Search By');
+        fireEvent.change(searchInput, { target: { value: 'Pika' } });
+
         await act(async () => {
-            fireEvent.change(searchInput, { target: { value: 'Pika' } });
-            // Fast-forward timers
             jest.advanceTimersByTime(4100);
         });
+
 
         await waitFor(() => {
             expect(mockSetAppLoading).toHaveBeenCalledWith(true);
@@ -117,9 +122,7 @@ describe('AppFilter', () => {
 
     test('should handle type filter change', async () => {
         const typeInput = screen.getByLabelText('Type');
-        await act(async () => {
-            fireEvent.change(typeInput, { target: { value: 'electric-url' } });
-        });
+        fireEvent.change(typeInput, { target: { value: 'electric-url' } });
 
         await waitFor(() => {
             expect(mockIsFilterEnable).toHaveBeenCalledWith(true);
@@ -129,9 +132,7 @@ describe('AppFilter', () => {
 
     test('should handle gender filter change', async () => {
         const genderInput = screen.getByLabelText('Gender');
-        await act(async () => {
-            fireEvent.change(genderInput, { target: { value: 'male-url' } });
-        });
+        fireEvent.change(genderInput, { target: { value: 'male-url' } });
 
         await waitFor(() => {
             expect(mockIsFilterEnable).toHaveBeenCalledWith(true);
@@ -141,18 +142,16 @@ describe('AppFilter', () => {
 
     test('should call getPokemonData and isFilterEnable on clean type handler', async () => {
         const clearButton = screen.getByText('Clear Type');
-        await act(async () => {
-            fireEvent.click(clearButton);
-        });
+        await userEvent.click(clearButton);
+
         expect(mockIsFilterEnable).toHaveBeenCalledWith(false);
         expect(mockGetPokemonData).toHaveBeenCalledWith(true);
     });
 
     test('should call getPokemonData and isFilterEnable on clean gender handler', async () => {
         const clearButton = screen.getByText('Clear Gender');
-        await act(async () => {
-            fireEvent.click(clearButton);
-        });
+        await userEvent.click(clearButton);
+
         expect(mockIsFilterEnable).toHaveBeenCalledWith(false);
         expect(mockGetPokemonData).toHaveBeenCalledWith(true);
     });
